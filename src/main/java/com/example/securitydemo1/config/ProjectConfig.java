@@ -1,5 +1,7 @@
 package com.example.securitydemo1.config;
 
+import com.example.securitydemo1.provider.CustomAuthenticationProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,6 +15,9 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
 public class ProjectConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private CustomAuthenticationProvider authenticationProvider;
 
 //   @Bean
 //    public UserDetailsService userDetailsService(){
@@ -34,7 +39,7 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
+        auth.authenticationProvider(authenticationProvider);
 //        var userDetailsService = new InMemoryUserDetailsManager();
 //
 //        var user1 = User.withUsername("John").password("12345").authorities("read").build();
@@ -43,16 +48,16 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter {
 //
 //        userDetailsService.createUser(user1);
 //        userDetailsService.createUser(user2);
-        auth.inMemoryAuthentication()
-                .withUser("john")
-                .password("12345")
-                .authorities("read")
-                .and()
-                .withUser("mary")
-                .password("12345")
-                .authorities("read")
-                .and()
-                .passwordEncoder(NoOpPasswordEncoder.getInstance());
+//        auth.inMemoryAuthentication()
+//                .withUser("john")
+//                .password("12345")
+//                .authorities("read")
+//                .and()
+//                .withUser("mary")
+//                .password("12345")
+//                .authorities("read")
+//                .and()
+//                .passwordEncoder(NoOpPasswordEncoder.getInstance());
     }
 
 
